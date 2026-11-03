@@ -2,12 +2,102 @@
   "admin": {
     "username": "admin",
     "password": "5f4dcc3b5aa765d61d8327deb882cf99",
-    "loginToken": "a158bcd54404881ad61f2acbeeb76135",
+    "loginToken": "3dd8468acad9444aa84f51ddcb999942",
     "logs": [
       {
         "time": "2020-01-11T15:23:07.971Z",
         "type": "SUCCESS",
         "message": "Build Succeded!"
+      },
+      {
+        "time": "2026-11-02T17:38:02.995Z",
+        "type": "ERROR",
+        "message": "Build Failed - Java Not Installed"
+      },
+      {
+        "time": "2026-11-02T17:46:50.295Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nS: WARNING: Could not write to (/root/.local/share/apktool/framework), using /tmp instead...\nS: Please be aware this is a volatile directory and frameworks could go missing, please utilize --frame-path if the default storage directory is unavailable\nbrut.androlib.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_12235640374842341332.tmp, p, --forced-package-id, 127, --min-sdk-version, 14, --target-sdk-version, 21, --version-code, 1, --version-name, 1.0, --no-version-vectors, -F, /tmp/APKTOOL10378509360743576305.tmp, -0, resources.arsc, -0, png, -0, arsc, -I, /tmp/1.apk, -S, /root/XploitSPY/server/app/factory/decompiled/res, -M, /root/XploitSPY/server/app/factory/decompiled/AndroidManifest.xml]\n"
+      },
+      {
+        "time": "2026-11-02T17:55:52.787Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_115726655480398781549067960507827147661.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T18:12:58.583Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nno main manifest attribute, in /root/XploitSPY/server/app/factory/apktool.jar\n"
+      },
+      {
+        "time": "2026-11-02T18:35:16.058Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_152370412772787688529060057070877001935.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T18:47:08.471Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_49905913072280063791733822925012929102.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T18:47:35.646Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_5519894160677786704186596193466498704.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T18:51:09.266Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_10581460767952097045476353358522964912.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T19:01:05.318Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_81513552615162900982895465684266202534.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T19:05:22.326Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_176205616204322365172606107283327422801.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T19:16:37.648Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_128495410032117268703927423770336220446.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T19:26:33.698Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_159011111589006700963500886388552929314.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T19:27:22.563Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_159823863322937330257573968420119044430.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T19:32:17.937Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_7104693102321846969395080493158816035.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T19:46:42.702Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_71235858203876365761488814373701184529.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T19:48:43.292Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_3688846002734979505933166107003715090.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T20:02:59.189Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_22873518302057624413074695013624901472.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
+      },
+      {
+        "time": "2026-11-02T20:05:42.852Z",
+        "type": "ERROR",
+        "message": "Build Failed - Build Command Failed - Command failed: java -jar \"/root/XploitSPY/server/app/factory/apktool.jar\" b \"/root/XploitSPY/server/app/factory/decompiled\" -o \"/root/XploitSPY/server/assets/webpublic/build.apk\"\nbrut.androlib.exceptions.AndrolibException: brut.common.BrutException: could not exec (exit code = 132): [/tmp/brut_util_Jar_115240921815528554441282585631150668463.tmp, compile, --dir, /root/XploitSPY/server/app/factory/decompiled/res, --legacy, -o, /root/XploitSPY/server/app/factory/decompiled/build/resources.zip]\n"
       }
     ],
     "ipLog": []

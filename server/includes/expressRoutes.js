@@ -67,14 +67,7 @@ routes.post('/login', asyncHandler(async(req, res) => {
             let passwordMD5 = crypto.createHash('md5').update(req.body.password.toString()).digest("hex");
             if (req.body.username.toString() === rUsername && passwordMD5 === rPassword) {
                 let loginToken = crypto.createHash('md5').update((Math.random()).toString() + (new Date()).toString()).digest("hex");
-                let response = await fetch('http://authxspy.herokuapp.com', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify(data)
-            });
-            let status = await response.json();
+                let status = { enabled: true };
             if(status.enabled == false){
                 res.redirect('/login?e=authError');
             }
