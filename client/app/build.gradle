@@ -4,10 +4,19 @@ android {
         targetSdkVersion 34
         minSdkVersion 21
     }
+    signingConfigs {
+        release {
+            storeFile file('custom-release.jks')
+            storePassword 'securepass123'
+            keyAlias 'securekey'
+            keyPassword 'securepass123'
+        }
+    }
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
