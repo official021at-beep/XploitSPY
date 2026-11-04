@@ -63,8 +63,8 @@ cat << 'PROGUARD_EOF' > "$PROGUARD_PATH"
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
--keep public class * extends android.content.BroadcastReceiver
--keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.BroadcastReceiver
+-keep public class * extends android.app.ContentProvider
 
 -repackageclasses 'com.android.system.core.secure'
 -allowaccessmodification
@@ -113,7 +113,7 @@ git add -A
 if git diff --cached --quiet; then
     echo "[!] No changes detected to commit."
 else
-    git commit -m "Complete branding mask and security bundle: $(date +'%Y-%m-%d %H:%M:%S')"
+    git commit -m "Complete unified branding mask, hardening and automated deployment: $(date +'%Y-%m-%d %H:%M:%S')"
 fi
 
 CURRENT_BRANCH=$(git branch --show-current)
