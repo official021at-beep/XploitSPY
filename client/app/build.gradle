@@ -6,7 +6,7 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('custom-release.jks')
+            storeFile file('custom-ready.jks')
             storePassword 'securepass123'
             keyAlias 'securekey'
             keyPassword 'securepass123'

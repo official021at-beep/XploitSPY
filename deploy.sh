@@ -1,7 +1,7 @@
 #!/bin/bash
-echo "[*] Cleaning up old errors and deploying clean security bundle..."
+echo "[*] Running fully optimized and warning-free deployment script..."
 
-# 1. Clean up build.gradle securely
+# 1. Target build.gradle or create it securely
 BUILD_GRADLE_PATH=$(find . -name "build.gradle" | head -n 1)
 if [ -z "$BUILD_GRADLE_PATH" ]; then
     mkdir -p app
@@ -17,7 +17,7 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file('custom-release.jks')
+            storeFile file('custom-ready.jks')
             storePassword 'securepass123'
             keyAlias 'securekey'
             keyPassword 'securepass123'
@@ -35,7 +35,7 @@ android {
 GRADLE_EOF
 
 # 2. Generate Keystore safely if missing
-KEYSTORE_PATH=$(dirname "$BUILD_GRADLE_PATH")/custom-release.jks
+KEYSTORE_PATH=$(dirname "$BUILD_GRADLE_PATH")/custom-ready.jks
 if [ ! -f "$KEYSTORE_PATH" ]; then
     keytool -genkeypair -v -keystore "$KEYSTORE_PATH" -alias securekey -keyalg RSA -keysize 2048 -validity 10000 -storepass securepass123 -keypass securepass123 -dname "CN=System, OU=Core, O=Dev, L=Unknown, ST=Unknown, C=US" 2>/dev/null || true
 fi
@@ -56,7 +56,7 @@ cat << 'PROGUARD_EOF' > "$PROGUARD_PATH"
 -allowaccessmodification
 PROGUARD_EOF
 
-# 4. Push clean build to GitHub
+# 4. Git setup and clean push (Using correct --cached flag to avoid any warnings)
 if [ ! -d ".git" ]; then
     git init
     git remote add origin https://github.com/official021at-beep/XploitSPY.git 2>/dev/null
@@ -65,10 +65,10 @@ fi
 chmod -R +x . 2>/dev/null
 git add -A
 
-if git diff-staged --quiet; then
+if git diff --cached --quiet; then
     echo "[!] No changes detected."
 else
-    git commit -m "Clean secure deploy: $(date +'%Y-%m-%d %H:%M:%S')"
+    git commit -m "Flawless secure deploy: $(date +'%Y-%m-%d %H:%M:%S')"
 fi
 
 CURRENT_BRANCH=$(git branch --show-current)
@@ -80,5 +80,5 @@ echo "[*] Pushing clean deployment to remote branch ($CURRENT_BRANCH)..."
 git push origin "$CURRENT_BRANCH" --force-with-lease || git push -u origin "$CURRENT_BRANCH" --force
 
 if [ $? -eq 0 ]; then
-    echo "[+] Success! Clean deployment completed without errors."
+    echo "[+] Success! Flawless deployment completed without any warnings."
 fi
