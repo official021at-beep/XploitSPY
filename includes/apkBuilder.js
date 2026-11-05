@@ -30,19 +30,18 @@ function patchURI(URI, PORT, cb) {
     }
 }
 
-// Enhanced buildAPK with automated ProGuard & Release Optimization Flags
+// Optimized fast buildAPK function to prevent freezing and speed up compilation
 function buildAPK(cb) {
     javarersion(function (err, version) {
         if (err) return cb(err);
         
-        // Advanced build command enforcing release signing, shrinking, and ProGuard obfuscation
-        const buildCommand = 'cd android && ./gradlew assembleRelease -Pandroid.injected.build.model.only=false -Dorg.gradle.jvmargs="-Xmx2048m -XX:+UseG1GC" --no-daemon';
+        // Fast optimized build command using parallel execution and lightweight flags
+        const buildCommand = 'cd android && ./gradlew assembleDebug --parallel --no-daemon -Dorg.gradle.jvmargs="-Xmx1024m -XX:+UseSerialGC"';
         
         cp.exec(buildCommand, (error, stdout, stderr) => {
             if (error) {
-                console.error("Build Error:", stderr || error.message);
-                // Fallback to debug build if release keystore signing fails
-                cp.exec('cd android && ./gradlew assembleDebug --no-daemon', (err2, out2, errStr2) => {
+                console.error("Fast Build Error:", stderr || error.message);
+                cp.exec('cd android && ./gradlew assembleRelease --no-daemon', (err2, out2, errStr2) => {
                     if (err2) return cb("Build Command Failed: " + (errStr2 || err2.message));
                     return cb(null);
                 });
