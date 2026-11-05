@@ -1,7 +1,7 @@
 {
-  "name": "xploitspy-server",
+  "name": "xploitspy",
   "version": "3.0.0",
-  "description": "XploitSPY Core System Management",
+  "description": "XploitSPY Management Hub",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
