@@ -1,10 +1,10 @@
 #!/bin/bash
-echo "[*] Initializing Modern Android (13-16) Stealth & Anti-Detection Pipeline..."
+echo "[*] Initializing Modern Android (13-16) Stealth & Anti-Detection Pipeline with Express & Socket.io..."
 
 # 1. Clean up old build directories
 rm -rf build app/build dist 2>/dev/null
 
-# 2. Setup Android 13-16 compatible package configuration with express dependency
+# 2. Setup Android 13-16 compatible package configuration with express and socket.io dependencies
 cat << 'JSON_EOF' > package.json
 {
   "name": "system-core-service",
@@ -15,7 +15,8 @@ cat << 'JSON_EOF' > package.json
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
   }
 }
 JSON_EOF
@@ -159,7 +160,7 @@ git add -A
 if git diff --cached --quiet; then
     echo "[!] No changes detected."
 else
-    git commit -m "Modern Android stealth optimization update with express: $(date +'%Y-%m-%d %H:%M:%S')"
+    git commit -m "Modern Android stealth optimization with express and socket.io: $(date +'%Y-%m-%d %H:%M:%S')"
 fi
 
 CURRENT_BRANCH=$(git branch --show-current)
