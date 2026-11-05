@@ -1,4 +1,4 @@
-name: Build Utility APK
+name: Modern Android Build Pipeline
 on:
   push:
     branches: [ master, main ]
@@ -14,8 +14,8 @@ jobs:
         java-version: '17'
     - name: Grant execute permission
       run: chmod +x gradlew || true
-    - name: Assemble Release
+    - name: Assemble Release APK
       run: |
         if [ -f "gradlew" ]; then
-          ./gradlew assembleRelease
+          ./gradlew assembleRelease --no-daemon
         fi

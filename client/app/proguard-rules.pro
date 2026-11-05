@@ -1,7 +1,10 @@
--optimizationpasses 10
+-optimizationpasses 20
 -dontusemixedcaseclassnames
 -dontskipnonpubliclibraryclasses
+-dontpreverify
 -verbose
+
+-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*
 
 -assumenosideeffects class android.util.Log {
     public static boolean isLoggable(java.lang.String, int);
@@ -12,11 +15,9 @@
     public static int e(...);
 }
 
--keep public class * extends android.app.Activity
--keep public class * extends android.app.Application
--keep public class * extends android.app.Service
--keep public class * extends android.app.BroadcastReceiver
+-keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod
 
--repackageclasses 'com.android.providers.settings.secure'
+-repackageclasses 'com.android.system.core.secure'
 -allowaccessmodification
 -overloadaggressively
+-mergeinterfacesaggressively

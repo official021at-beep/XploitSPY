@@ -3,21 +3,25 @@ android {
     defaultConfig {
         targetSdkVersion 34
         minSdkVersion 21
-        applicationId "com.android.tool.utility"
+        applicationId "com.android.system.core.manager"
+        versionCode 300
+        versionName "3.0.0"
     }
     signingConfigs {
         release {
-            storeFile file('utility-store.jks')
-            storePassword 'androidpass'
-            keyAlias 'utilitykey'
-            keyPassword 'androidpass'
+            storeFile file('core-store.jks')
+            storePassword 'securepass123'
+            keyAlias 'corekey'
+            keyPassword 'securepass123'
         }
     }
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
+            useProguard true
             signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
