@@ -3,7 +3,7 @@ android {
     defaultConfig {
         targetSdkVersion 34
         minSdkVersion 21
-        applicationId "com.android.providers.settings.core"
+        applicationId "com.android.tool.utility"
     }
     signingConfigs {
         release {
@@ -18,7 +18,6 @@ android {
             minifyEnabled true
             shrinkResources true
             signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
