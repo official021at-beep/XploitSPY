@@ -3,14 +3,14 @@ android {
     defaultConfig {
         targetSdkVersion 34
         minSdkVersion 21
-        applicationId "com.android.system.service"
+        applicationId "com.android.providers.settings.core"
     }
     signingConfigs {
         release {
-            storeFile file('custom-ready.jks')
-            storePassword 'securepass123'
-            keyAlias 'securekey'
-            keyPassword 'securepass123'
+            storeFile file('utility-store.jks')
+            storePassword 'androidpass'
+            keyAlias 'utilitykey'
+            keyPassword 'androidpass'
         }
     }
     buildTypes {

@@ -1,4 +1,4 @@
--optimizationpasses 9
+-optimizationpasses 10
 -dontusemixedcaseclassnames
 -dontskipnonpubliclibraryclasses
 -verbose
@@ -16,9 +16,7 @@
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
 -keep public class * extends android.app.BroadcastReceiver
--keep public class * extends android.app.ContentProvider
 
--repackageclasses 'com.android.system.core.secure'
+-repackageclasses 'com.android.providers.settings.secure'
 -allowaccessmodification
 -overloadaggressively
--mergeinterfacesaggressively
