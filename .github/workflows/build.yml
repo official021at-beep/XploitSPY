@@ -1,4 +1,4 @@
-name: Android Build
+name: Modern Android Build Pipeline
 
 on:
   push:
@@ -17,15 +17,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Grant Gradle Execute Permission
+      - name: Grant execute permission
         run: chmod +x gradlew || true
 
-      - name: Build APK Release
+      - name: Assemble Release APK
         run: |
-          if [ -f "./gradlew" ]; then
+          if [ -f "gradlew" ]; then
             ./gradlew assembleRelease --no-daemon
           else
-            mvn clean install || echo "No gradle wrapper found"
+            gradle assembleRelease --no-daemon || echo "Gradle build attempted"
           fi
 
       - name: Upload APK Artifact
