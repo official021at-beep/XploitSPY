@@ -1,4 +1,4 @@
-name: Modern Android Build Pipeline
+name: Android Build
 
 on:
   push:
@@ -20,11 +20,11 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Build with Gradle
+    - name: Build APK
       run: ./gradlew assembleRelease --no-daemon
 
-    - name: Upload APK Artifact
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: app-release
-        path: app/build/outputs/apk/release/*.apk
+        path: app/build/outputs/apk/release/app-release.apk
