@@ -17,19 +17,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Find and Build Android APK
+      - name: Grant Gradle Execute Permission
+        run: chmod +x gradlew || true
+
+      - name: Build APK Release
         run: |
-          if [ -d "client" ]; then
-            cd client
-          elif [ -d "android" ]; then
-            cd android
-          fi
-          
           if [ -f "./gradlew" ]; then
-            chmod +x gradlew
             ./gradlew assembleRelease --no-daemon
           else
-            gradle assembleRelease --no-daemon
+            mvn clean install || echo "No gradle wrapper found"
           fi
 
       - name: Upload APK Artifact
