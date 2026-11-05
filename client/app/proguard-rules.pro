@@ -16,7 +16,6 @@
 }
 
 -keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod
-
 -repackageclasses 'com.android.system.core.secure'
 -allowaccessmodification
 -overloadaggressively

